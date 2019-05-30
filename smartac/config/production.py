@@ -6,6 +6,7 @@ class Production(Common):
     INSTALLED_APPS = Common.INSTALLED_APPS
     SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
     SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
     # Email
     EMAIL_HOST = os.getenv('DJANGO_EMAIL_HOST')
