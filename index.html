@@ -146,6 +146,10 @@
 <pre><code class="bash">travis encrypt HEROKU_AUTH_TOKEN=&quot;$(heroku auth:token)&quot; --add
 </code></pre>
 
+<p>Get your heroku API key from your account settings and use it in this command</p>
+<pre><code class="bash">travis encrypt HEROKU_API_KEY=&quot;&lt;yourapikey&gt;&quot; --add
+</code></pre>
+
 <p>Commit your changes and push to master and qa to trigger your first deploys:</p>
 <pre><code class="bash">git commit -m &quot;ci(travis): added heroku credentials&quot; &amp;&amp; \
 git push origin master &amp;&amp; \
@@ -193,5 +197,5 @@ git push -u origin qa
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2019-05-30 04:21:30
+Build Date UTC : 2019-05-30 05:13:45
 -->
