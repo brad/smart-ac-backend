@@ -61,6 +61,12 @@ Securely add your heroku credentials to travis so it can automatically deploy yo
 travis encrypt HEROKU_AUTH_TOKEN="$(heroku auth:token)" --add
 ```
 
+Get your heroku API key from your account settings and use it in this command
+
+```bash
+travis encrypt HEROKU_API_KEY="<yourapikey>" --add
+```
+
 Commit your changes and push to master and qa to trigger your first deploys:
 
 ```bash

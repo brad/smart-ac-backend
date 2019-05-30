@@ -10,16 +10,17 @@ script:
 - docker-compose run --rm web bash -c "flake8 . && python wait_for_postgres.py &&
   ./manage.py test"
 after_success:
-- if [ "$TRAVIS_BRANCH" == "master" ]; then docker login --username=_ --password="$HEROKU_AUTH_TOKEN"
-  registry.heroku.com; docker tag web registry.heroku.com/smartac-backend-prod/web; docker
-  push registry.heroku.com/smartac-backend-prod/web; fi
-- if [ "$TRAVIS_BRANCH" == "qa" ]; then docker login --username=_ --password="$HEROKU_AUTH_TOKEN"
-  registry.heroku.com; docker tag web registry.heroku.com/smartac-backend-qa/web; docker push
-  registry.heroku.com/smartac-backend-qa/web; fi
+- wget -qO- https://toolbelt.heroku.com/install.sh | sh
+- docker login --username=_ --password="$HEROKU_AUTH_TOKEN" registry.heroku.com
+- if [ "$TRAVIS_BRANCH" == "master" ]; then docker tag web registry.heroku.com/smartac-backend-prod/web; docker
+  push registry.heroku.com/smartac-backend-prod/web; heroku container:release web --app smartac-backend-prod; fi
+- if [ "$TRAVIS_BRANCH" == "qa" ]; then docker tag web registry.heroku.com/smartac-backend-qa/web; docker push
+  registry.heroku.com/smartac-backend-qa/web; heroku container:release web --app smartac-backend-qa; fi
 notifications:
   email: false
 cache:
   pip: true
 env:
   global:
-    secure: GfsBwpa8k3oOZu05iWTLVLlq1A3x31OiyAqxVJefUVrsq6HmQGP2Jjs+x3aZowJVb2DEwTtfyJWokvwRiFJ6l3kRHQrsRK8Ou39n1W98DLntr1OIlvVF6tl4LlFt4J3zzRulvaz+ofSURqbAmDQVXn+iIrHgNTZFo6gI4QC1tih590O+31QDdHoVydJMOKkRSZwfNwSqqRlLnDdiI16ewDn2lE3hnfbdUnf5kQpww5o7aHmGpPTxD1u1ZjzRzFeYwEElFrVqGVMg6jNUx35fNLnEitYyGXj4VDSheCMqYLJKyadY/byge56BLQpK2h6q0SU10/8YN0puHQRlAwLE+yDKrs++hFOiRGeqj1zOvqRkmzU1VABJh5yB3h0anFu2Wt3+xOJhIoxO1tisM0qCESDjzLc+K+y+tHvzbPsLjPJ+/vTCOmNmfGnUzWe6CZoNyL5YuDUdJUCliJK6UCpOA3yLhJiYJglT2ZCySCw9mdTkk31y4rvn86FNEI3YYiV9FNLYyyhkHHHJRwaVOoQJNaAGnu1hxy/fER8DHzN9J1QJEfOi5tkjWY7pSfK0dNtfKLhuUMNVQXQTekSORSpgsWuf37ONvwQgtiWWKCsOUaD4L8QD/gPKj6qqlbpLjFESRN2t69I5RDbDeIPNIq3PeRoCPy/BqRlOhpQfJy/w5IA=
+  - secure: GfsBwpa8k3oOZu05iWTLVLlq1A3x31OiyAqxVJefUVrsq6HmQGP2Jjs+x3aZowJVb2DEwTtfyJWokvwRiFJ6l3kRHQrsRK8Ou39n1W98DLntr1OIlvVF6tl4LlFt4J3zzRulvaz+ofSURqbAmDQVXn+iIrHgNTZFo6gI4QC1tih590O+31QDdHoVydJMOKkRSZwfNwSqqRlLnDdiI16ewDn2lE3hnfbdUnf5kQpww5o7aHmGpPTxD1u1ZjzRzFeYwEElFrVqGVMg6jNUx35fNLnEitYyGXj4VDSheCMqYLJKyadY/byge56BLQpK2h6q0SU10/8YN0puHQRlAwLE+yDKrs++hFOiRGeqj1zOvqRkmzU1VABJh5yB3h0anFu2Wt3+xOJhIoxO1tisM0qCESDjzLc+K+y+tHvzbPsLjPJ+/vTCOmNmfGnUzWe6CZoNyL5YuDUdJUCliJK6UCpOA3yLhJiYJglT2ZCySCw9mdTkk31y4rvn86FNEI3YYiV9FNLYyyhkHHHJRwaVOoQJNaAGnu1hxy/fER8DHzN9J1QJEfOi5tkjWY7pSfK0dNtfKLhuUMNVQXQTekSORSpgsWuf37ONvwQgtiWWKCsOUaD4L8QD/gPKj6qqlbpLjFESRN2t69I5RDbDeIPNIq3PeRoCPy/BqRlOhpQfJy/w5IA=
+  - secure: WkRMqvYKKg0zU23O7Xi616xbnsmbt+0Hw+/axKJVHkX3mUqKjMVow7Q9X0/eRzdn9EFB6MQCroEOceVa9O+sSommJBGCrNgIK9nWpKtb1t40zI4iXRXOuZzqqJb1C8iIh15ChcqxKNdl0Wsfc0fCPdlIWy504YPW7Imjr6e6+xBu7dF2MXAaAcgSTrn+X8uJZcsPnzP2srUvPRwLtAA80xmRUYUzhSBc16Jcq7UNV44VutKOvOnDsBx2PPg25qV4O0CeVB909Ew5mLK1Ld3m2/UYlPD44OaAXYFATPmIXIGMnKTbCzEimms5E4dHcKQOddTJmFAgVLN4HsmJWS/P9zPY4ki3jfbeYZSTT5BpT4Xkq2BPMoj6QrqhaF/cJgGaSN8pgTS4UIvG2MwS4jzeVgqt5H2vuGRAT/L2291/Gnj7+zN9KR86nKX22bHRaQ/2MIxsFaaLT65BH1g8g/wE/Mes+OfUJMHzlYmZoEbXnM8nqZ1aCloIjZngXIGcYzvJeW9TUXzTMjyXdZUbT9icsPWUJjpmKDxoNuX9iKpEptzbC1+doeBKqAiOMhT8mrwnKMtOGskN3ylmSltlAfamCx8j2pPAhfvuOW4O2RVwN+IMf5FnrlxNrwYrsfMcAU5VKibmqflrL2I5/DzYxWKnwIy9Nvlww3+ShwOzpzW7MvY=
