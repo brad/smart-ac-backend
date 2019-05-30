@@ -14,6 +14,7 @@ class Common(Configuration):
         'django.contrib.contenttypes',
         'django.contrib.sessions',
         'django.contrib.messages',
+        'django.contrib.sites',
         'django.contrib.staticfiles',
 
 
@@ -21,11 +22,15 @@ class Common(Configuration):
         'rest_framework',            # utilities for rest apis
         'rest_framework.authtoken',  # token authentication
         'django_filters',            # for filtering rest endpoints
+        'invitations',               # for inviting users to the admin
 
         # Your apps
         'smartac.users',
 
     )
+
+    SITE_ID = 1
+    LOGIN_URL = '/admin/login/'
 
     # https://docs.djangoproject.com/en/2.0/topics/http/middleware/
     MIDDLEWARE = (

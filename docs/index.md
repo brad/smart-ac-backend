@@ -40,6 +40,11 @@ heroku create smartac-prod --remote prod && \
         DJANGO_AWS_ACCESS_KEY_ID="Add your id" \
         DJANGO_AWS_SECRET_ACCESS_KEY="Add your key" \
         DJANGO_AWS_STORAGE_BUCKET_NAME="smartac-prod" \
+        DJANGO_EMAIL_HOST="Your smtp host" \
+        DJANGO_EMAIL_USE_TLS=True \
+        DJANGO_EMAIL_PORT=587 \
+        DJANGO_EMAIL_HOST_USER="Your smtp sending email" \
+        DJANGO_EMAIL_HOST_PASSWORD="Your smtp account password" \
         --app smartac-prod
 ```
 
