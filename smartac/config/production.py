@@ -5,6 +5,14 @@ from .common import Common
 class Production(Common):
     INSTALLED_APPS = Common.INSTALLED_APPS
     SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+
+    # Email
+    EMAIL_HOST = os.getenv('DJANGO_EMAIL_HOST')
+    EMAIL_HOST_PASSWORD = os.getenv('DJANGO_EMAIL_HOST_PASSWORD')
+    EMAIL_HOST_USER = os.getenv('DJANGO_EMAIL_HOST_USER')
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+
     # Site
     # https://docs.djangoproject.com/en/2.0/ref/settings/#allowed-hosts
     ALLOWED_HOSTS = ["*"]

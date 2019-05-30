@@ -40,8 +40,6 @@ heroku create smartac-backend-prod --remote prod && \
         DJANGO_CONFIGURATION="Production" \
         DJANGO_SETTINGS_MODULE="smartac.config" \
         DJANGO_EMAIL_HOST="Your smtp host" \
-        DJANGO_EMAIL_USE_TLS=True \
-        DJANGO_EMAIL_PORT=587 \
         DJANGO_EMAIL_HOST_USER="Your smtp sending email" \
         DJANGO_EMAIL_HOST_PASSWORD="Your smtp account password" \
         --app smartac-backend-prod
@@ -59,8 +57,6 @@ heroku create smartac-backend-qa --remote qa && \
         DJANGO_CONFIGURATION="Production" \
         DJANGO_SETTINGS_MODULE="smartac.config" \
         DJANGO_EMAIL_HOST="Your smtp host" \
-        DJANGO_EMAIL_USE_TLS = True \
-        DJANGO_EMAIL_PORT = 587 \
         DJANGO_EMAIL_HOST_USER = "Your smtp sending email" \
         DJANGO_EMAIL_HOST_PASSWORD = "Your smtp account password" \
         --app smartac-backend-qa

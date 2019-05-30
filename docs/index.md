@@ -40,9 +40,9 @@ heroku create smartac-prod --remote prod && \
         DJANGO_AWS_ACCESS_KEY_ID="Add your id" \
         DJANGO_AWS_SECRET_ACCESS_KEY="Add your key" \
         DJANGO_AWS_STORAGE_BUCKET_NAME="smartac-prod" \
+        DJANGO_CONFIGURATION="Production" \
+        DJANGO_SETTINGS_MODULE="smartac.config" \
         DJANGO_EMAIL_HOST="Your smtp host" \
-        DJANGO_EMAIL_USE_TLS=True \
-        DJANGO_EMAIL_PORT=587 \
         DJANGO_EMAIL_HOST_USER="Your smtp sending email" \
         DJANGO_EMAIL_HOST_PASSWORD="Your smtp account password" \
         --app smartac-prod
@@ -52,12 +52,17 @@ Creating the qa sever:
 
 ```
 heroku create `smartac-qa --remote qa && \
-    heroku addons:create newrelic:wayne && \
     heroku addons:create heroku-postgresql:hobby-dev && \
     heroku config:set DJANGO_SECRET=`openssl rand -base64 32` \
         DJANGO_AWS_ACCESS_KEY_ID="Add your id" \
         DJANGO_AWS_SECRET_ACCESS_KEY="Add your key" \
         DJANGO_AWS_STORAGE_BUCKET_NAME="smartac-qa" \
+        DJANGO_CONFIGURATION="Production" \
+        DJANGO_SETTINGS_MODULE="smartac.config" \
+        DJANGO_EMAIL_HOST="Your smtp host" \
+        DJANGO_EMAIL_HOST_USER="Your smtp sending email" \
+        DJANGO_EMAIL_HOST_PASSWORD="Your smtp account password" \
+        --app smartac-qa
 ```
 
 Securely add your heroku credentials to travis so it can automatically deploy your changes.
