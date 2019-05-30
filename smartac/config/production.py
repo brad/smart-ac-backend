@@ -5,6 +5,7 @@ from .common import Common
 class Production(Common):
     INSTALLED_APPS = Common.INSTALLED_APPS
     SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+    SECURE_SSL_REDIRECT = True
 
     # Email
     EMAIL_HOST = os.getenv('DJANGO_EMAIL_HOST')
