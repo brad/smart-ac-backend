@@ -36,3 +36,4 @@ boto3==1.9.93
 
 # Invites
 django-invitations==1.9.2
+django-allauth==0.39.1

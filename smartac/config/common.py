@@ -17,11 +17,12 @@ class Common(Configuration):
         'django.contrib.sites',
         'django.contrib.staticfiles',
 
-
         # Third party apps
         'rest_framework',            # utilities for rest apis
         'rest_framework.authtoken',  # token authentication
         'django_filters',            # for filtering rest endpoints
+        'allauth',
+        'allauth.account',           # For signup
         'invitations',               # for inviting users to the admin
 
         # Your apps
@@ -30,7 +31,10 @@ class Common(Configuration):
     )
 
     SITE_ID = 1
-    LOGIN_URL = '/admin/login/'
+    LOGIN_URL = 'admin:login'
+    INVITATIONS_INVITATION_ONLY = True
+    INVITATIONS_ACCEPT_INVITE_AFTER_SIGNUP = True
+    ACCOUNT_ADAPTER = 'invitations.models.InvitationsAdapter'
 
     # https://docs.djangoproject.com/en/2.0/topics/http/middleware/
     MIDDLEWARE = (
@@ -91,7 +95,9 @@ class Common(Configuration):
     TEMPLATES = [
         {
             'BACKEND': 'django.template.backends.django.DjangoTemplates',
-            'DIRS': STATICFILES_DIRS,
+            'DIRS': STATICFILES_DIRS + [
+                os.path.normpath(join(os.path.dirname(BASE_DIR), 'templates'))
+            ],
             'APP_DIRS': True,
             'OPTIONS': {
                 'context_processors': [
