@@ -5,14 +5,16 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.views.generic.base import RedirectView
 from rest_framework.routers import DefaultRouter
-from .devices.views import DeviceCreateViewSet
+from .devices import views as device_views
 
 from allauth import urls as allauth_urls
 from invitations import urls as invitations_urls
 
 
 router = DefaultRouter()
-router.register(r'devices', DeviceCreateViewSet)
+router.register('devices', device_views.DeviceCreateViewSet)
+router.register('sensor_logs', device_views.DeviceSensorLogCreateViewSet)
+router.register('health_status', device_views.DeviceHealthStatusCreateViewSet)
 
 urlpatterns = [
     path(
