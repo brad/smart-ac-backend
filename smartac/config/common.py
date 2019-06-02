@@ -19,7 +19,6 @@ class Common(Configuration):
 
         # Third party apps
         'rest_framework',            # utilities for rest apis
-        'rest_framework.authtoken',  # token authentication
         'django_filters',            # for filtering rest endpoints
         'allauth',
         'allauth.account',           # For signup
@@ -27,7 +26,7 @@ class Common(Configuration):
 
         # Your apps
         'smartac.users',
-
+        'smartac.devices',
     )
 
     SITE_ID = 1
@@ -35,6 +34,9 @@ class Common(Configuration):
     INVITATIONS_INVITATION_ONLY = True
     INVITATIONS_ACCEPT_INVITE_AFTER_SIGNUP = True
     ACCOUNT_ADAPTER = 'invitations.models.InvitationsAdapter'
+
+    USE_TZ = True
+    TIME_ZONE = 'US/Pacific'
 
     # https://docs.djangoproject.com/en/2.0/topics/http/middleware/
     MIDDLEWARE = (
