@@ -9,9 +9,10 @@ Supports registering devices.
 
 Parameters:
 
-Name            | Type  | Required | Description
-----------------|-------|----------|------------
-serial_number   | uuid4 | Yes      | The serial number of the device.
+Name             | Type  | Required | Description
+-----------------|-------|----------|------------
+serial_number    | uuid4 | Yes      | The serial number of the device.
+firmware_version | char  | Yes      | The firmware version on the device.
 
 *Note:*
 
@@ -25,6 +26,7 @@ Content-Type application/json
 
 {
   "serial_number": "6d5f9bae-a31b-4b7b-82c4-3853eda2b011",
+  "firmware_version": "v1.0.0",
   "registered": "2019-06-02T00:08:09+0000",
   "auth_token": "132cf952e0165a274bf99e115ab483671b3d9ff6"
 }

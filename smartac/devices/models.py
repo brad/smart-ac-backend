@@ -10,6 +10,7 @@ from rest_framework.authtoken.models import Token
 @python_2_unicode_compatible
 class Device(models.Model):
     serial_number = models.UUIDField()
+    firmware_version = models.CharField(max_length=32)
     registered = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

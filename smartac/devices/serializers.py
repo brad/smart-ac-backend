@@ -12,5 +12,5 @@ class CreateDeviceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Device
-        fields = ('serial_number', 'registered', 'auth_token',)
-        read_only_fields = ('registered', 'auth_token',)
+        fields = ('serial_number', 'firmware_version', 'registered', 'auth_token',)
+        read_only_fields = ('auth_token',)

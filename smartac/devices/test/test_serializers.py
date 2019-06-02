@@ -11,7 +11,10 @@ fake = Faker()
 class TestCreateDeviceSerializer(TestCase):
 
     def setUp(self):
-        self.device_data = {'serial_number': fake.uuid4()}
+        self.device_data = {
+            'serial_number': fake.uuid4(),
+            'firmware_version': 'v1.0.0',
+        }
 
     def test_serializer_with_empty_data(self):
         serializer = CreateDeviceSerializer(data={})
