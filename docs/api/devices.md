@@ -54,11 +54,11 @@ For bulk object creation, pass a list of objects with the above parameters.
 *Examples:*
 
 ```
-curl -X POST http://127.0.0.1:8000/api/v1/sensor_logs/ -H "Content-Type: application/json" -H 'Authorization: Token 73c8a8ad8a51ad207d10087981e882516c7dd80c' -d '{"value":"12","sensor_type":"TM"}'
+curl -X POST https://smartac-backend-prod.herokuapp.com/api/v1/sensor_logs/ -H "Content-Type: application/json" -H 'Authorization: Token 73c8a8ad8a51ad207d10087981e882516c7dd80c' -d '{"value":"12","sensor_type":"TM"}'
 ```
 
 ```
-curl -X POST http://127.0.0.1:8000/api/v1/sensor_logs/ -H "Content-Type: application/json" -H 'Authorization: Token 73c8a8ad8a51ad207d10087981e882516c7dd80c' -d '[{"value":"13","sensor_type":"TM"},{"value":"8","sensor_type":"CO"},{"value":"49.67","sensor_type":"HM"}]'
+curl -X POST https://smartac-backend-prod.herokuapp.com/api/v1/sensor_logs/ -H "Content-Type: application/json" -H 'Authorization: Token 73c8a8ad8a51ad207d10087981e882516c7dd80c' -d '[{"value":"13","sensor_type":"TM"},{"value":"8","sensor_type":"CO"},{"value":"49.67","sensor_type":"HM"}]'
 ```
 
 *Note:*
@@ -118,11 +118,11 @@ For bulk object creation, pass a list of objects with the above parameters.
 *Examples:*
 
 ```
-curl -X POST http://127.0.0.1:8000/api/v1/health_status/ -H "Content-Type: application/json" -H 'Authorization: Token 73c8a8ad8a51ad207d10087981e882516c7dd80c' -d '{"value":"needs_service"}'
+curl -X POST https://smartac-backend-prod.herokuapp.com/api/v1/health_status/ -H "Content-Type: application/json" -H 'Authorization: Token 73c8a8ad8a51ad207d10087981e882516c7dd80c' -d '{"value":"needs_service"}'
 ```
 
 ```
-curl -X POST http://127.0.0.1:8000/api/v1/health_status/ -H "Content-Type: application/json" -H 'Authorization: Token 73c8a8ad8a51ad207d10087981e882516c7dd80c' -d '[{"value":"needs_repair"},{"value":"feeling_better"}]'
+curl -X POST https://smartac-backend-prod.herokuapp.com/api/v1/health_status/ -H "Content-Type: application/json" -H 'Authorization: Token 73c8a8ad8a51ad207d10087981e882516c7dd80c' -d '[{"value":"needs_repair"},{"value":"feeling_better"}]'
 ```
 
 *Note:*
