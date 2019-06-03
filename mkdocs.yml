@@ -10,3 +10,5 @@ nav:
   - API:
     - Authentication: 'api/authentication.md'
     - Devices: 'api/devices.md'
+  - Admin:
+    - Home: 'admin/index.md'
