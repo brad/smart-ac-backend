@@ -18,6 +18,12 @@ firmware_version | char  | Yes      | The firmware version on the device.
 
 - Not Authorization Protected
 
+*Examples:*
+
+```
+curl -X POST https://smartac-backend-prod.herokuapp.com/api/v1/devices/ -H "Content-Type: application/json" -d '{"serial_number":"6d5f9bae-a31b-4b7b-82c4-3853eda2b011","firmware_version":"v1.0.0"}'
+```
+
 **Response**:
 
 ```json
