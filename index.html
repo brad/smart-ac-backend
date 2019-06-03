@@ -49,6 +49,15 @@
                         <a href=".">Home</a>
                     </li>
                     <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="admin/">Home</a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Api <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             
@@ -57,7 +66,7 @@
 </li>
                             
 <li >
-    <a href="api/users/">Users</a>
+    <a href="api/devices/">Devices</a>
 </li>
                         </ul>
                     </li>
@@ -75,7 +84,7 @@
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="api/authentication/">
+                        <a rel="prev" href="admin/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -103,7 +112,10 @@
 <h1 id="smart-ac-backend">smart-ac-backend</h1>
 <p><a href="https://travis-ci.org/brad/smart-ac-backend"><img alt="Build Status" src="https://travis-ci.org/brad/smart-ac-backend.svg?branch=master" /></a>
 <a href="https://github.com/agconti/cookiecutter-django-rest"><img alt="Built with" src="https://img.shields.io/badge/Built_with-Cookiecutter_Django_Rest-F7B633.svg" /></a></p>
-<p>Backend for smart air conditioners. Check out the project's <a href="http://brad.github.io/smart-ac-backend/">documentation</a>.</p>
+<p>Backend for smart air conditioners. Check out the project's <a href="http://brad.github.io/smart-ac-backend/">documentation</a>.
+Developers, see below.
+Administrators check the documentation <a href="admin/">here</a>.
+API consumers go <a href="api/devices/">here</a>.</p>
 <h1 id="prerequisites">Prerequisites</h1>
 <ul>
 <li><a href="https://docs.docker.com/docker-for-mac/install/">Docker</a>  </li>
@@ -129,17 +141,27 @@
         DJANGO_AWS_ACCESS_KEY_ID=&quot;Add your id&quot; \
         DJANGO_AWS_SECRET_ACCESS_KEY=&quot;Add your key&quot; \
         DJANGO_AWS_STORAGE_BUCKET_NAME=&quot;smartac-prod&quot; \
+        DJANGO_CONFIGURATION=&quot;Production&quot; \
+        DJANGO_SETTINGS_MODULE=&quot;smartac.config&quot; \
+        DJANGO_EMAIL_HOST=&quot;Your smtp host&quot; \
+        DJANGO_EMAIL_HOST_USER=&quot;Your smtp sending email&quot; \
+        DJANGO_EMAIL_HOST_PASSWORD=&quot;Your smtp account password&quot; \
         --app smartac-prod
 </code></pre>
 
 <p>Creating the qa sever:</p>
 <pre><code>heroku create `smartac-qa --remote qa &amp;&amp; \
-    heroku addons:create newrelic:wayne &amp;&amp; \
     heroku addons:create heroku-postgresql:hobby-dev &amp;&amp; \
     heroku config:set DJANGO_SECRET=`openssl rand -base64 32` \
         DJANGO_AWS_ACCESS_KEY_ID=&quot;Add your id&quot; \
         DJANGO_AWS_SECRET_ACCESS_KEY=&quot;Add your key&quot; \
         DJANGO_AWS_STORAGE_BUCKET_NAME=&quot;smartac-qa&quot; \
+        DJANGO_CONFIGURATION=&quot;Production&quot; \
+        DJANGO_SETTINGS_MODULE=&quot;smartac.config&quot; \
+        DJANGO_EMAIL_HOST=&quot;Your smtp host&quot; \
+        DJANGO_EMAIL_HOST_USER=&quot;Your smtp sending email&quot; \
+        DJANGO_EMAIL_HOST_PASSWORD=&quot;Your smtp account password&quot; \
+        --app smartac-qa
 </code></pre>
 
 <p>Securely add your heroku credentials to travis so it can automatically deploy your changes.</p>
@@ -197,5 +219,5 @@ git push -u origin qa
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2019-05-30 05:13:45
+Build Date UTC : 2019-06-03 05:00:27
 -->

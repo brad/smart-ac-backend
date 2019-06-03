@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Users - smartac</title>
+        <title>Devices - smartac</title>
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
@@ -48,6 +48,15 @@
                     <li >
                         <a href="../..">Home</a>
                     </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../../admin/">Home</a>
+</li>
+                        </ul>
+                    </li>
                     <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Api <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -57,7 +66,7 @@
 </li>
                             
 <li class="active">
-    <a href="./">Users</a>
+    <a href="./">Devices</a>
 </li>
                         </ul>
                     </li>
@@ -92,19 +101,19 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#users">Users</a></li>
-            <li><a href="#register-a-new-user-account">Register a new user account</a></li>
-            <li><a href="#get-a-users-profile-information">Get a user's profile information</a></li>
-            <li><a href="#update-your-profile-information">Update your profile information</a></li>
+        <li class="main active"><a href="#device">Device</a></li>
+            <li><a href="#register-a-new-device">Register a new device</a></li>
+            <li><a href="#create-a-device-sensor-log">Create a device sensor log</a></li>
+            <li><a href="#create-a-device-health-status-log">Create a device health status log</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="users">Users</h1>
-<p>Supports registering, viewing, and updating user accounts.</p>
-<h2 id="register-a-new-user-account">Register a new user account</h2>
+<h1 id="device">Device</h1>
+<p>Supports registering devices.</p>
+<h2 id="register-a-new-device">Register a new device</h2>
 <p><strong>Request</strong>:</p>
-<p><code>POST</code> <code>/users/</code></p>
+<p><code>POST</code> <code>/devices/</code></p>
 <p>Parameters:</p>
 <table>
 <thead>
@@ -117,34 +126,16 @@
 </thead>
 <tbody>
 <tr>
-<td>username</td>
-<td>string</td>
+<td>serial_number</td>
+<td>uuid4</td>
 <td>Yes</td>
-<td>The username for the new user.</td>
+<td>The serial number of the device.</td>
 </tr>
 <tr>
-<td>password</td>
-<td>string</td>
+<td>firmware_version</td>
+<td>char</td>
 <td>Yes</td>
-<td>The password for the new user account.</td>
-</tr>
-<tr>
-<td>first_name</td>
-<td>string</td>
-<td>No</td>
-<td>The user's given name.</td>
-</tr>
-<tr>
-<td>last_name</td>
-<td>string</td>
-<td>No</td>
-<td>The user's family name.</td>
-</tr>
-<tr>
-<td>email</td>
-<td>string</td>
-<td>No</td>
-<td>The user's email address.</td>
+<td>The firmware version on the device.</td>
 </tr>
 </tbody>
 </table>
@@ -152,89 +143,155 @@
 <ul>
 <li>Not Authorization Protected</li>
 </ul>
+<p><em>Examples:</em></p>
+<pre><code>curl -X POST https://smartac-backend-prod.herokuapp.com/api/v1/devices/ -H &quot;Content-Type: application/json&quot; -d '{&quot;serial_number&quot;:&quot;6d5f9bae-a31b-4b7b-82c4-3853eda2b011&quot;,&quot;firmware_version&quot;:&quot;v1.0.0&quot;}'
+</code></pre>
+
 <p><strong>Response</strong>:</p>
 <pre><code class="json">Content-Type application/json
 201 Created
 
 {
-  &quot;id&quot;: &quot;6d5f9bae-a31b-4b7b-82c4-3853eda2b011&quot;,
-  &quot;username&quot;: &quot;richard&quot;,
-  &quot;first_name&quot;: &quot;Richard&quot;,
-  &quot;last_name&quot;: &quot;Hendriks&quot;,
-  &quot;email&quot;: &quot;richard@piedpiper.com&quot;,
+  &quot;id&quot;: 6,
+  &quot;serial_number&quot;: &quot;6d5f9bae-a31b-4b7b-82c4-3853eda2b011&quot;,
+  &quot;firmware_version&quot;: &quot;v1.0.0&quot;,
+  &quot;registered&quot;: &quot;2019-06-02T00:08:09+0000&quot;,
   &quot;auth_token&quot;: &quot;132cf952e0165a274bf99e115ab483671b3d9ff6&quot;
 }
 </code></pre>
 
 <p>The <code>auth_token</code> returned with this response should be stored by the client for
 authenticating future requests to the API. See <a href="../authentication/">Authentication</a>.</p>
-<h2 id="get-a-users-profile-information">Get a user's profile information</h2>
+<h2 id="create-a-device-sensor-log">Create a device sensor log</h2>
 <p><strong>Request</strong>:</p>
-<p><code>GET</code> <code>/users/:id</code></p>
-<p>Parameters:</p>
-<p><em>Note:</em></p>
-<ul>
-<li><strong><a href="../authentication/">Authorization Protected</a></strong></li>
-</ul>
-<p><strong>Response</strong>:</p>
-<pre><code class="json">Content-Type application/json
-200 OK
-
-{
-  &quot;id&quot;: &quot;6d5f9bae-a31b-4b7b-82c4-3853eda2b011&quot;,
-  &quot;username&quot;: &quot;richard&quot;,
-  &quot;first_name&quot;: &quot;Richard&quot;,
-  &quot;last_name&quot;: &quot;Hendriks&quot;,
-  &quot;email&quot;: &quot;richard@piedpiper.com&quot;,
-}
-</code></pre>
-
-<h2 id="update-your-profile-information">Update your profile information</h2>
-<p><strong>Request</strong>:</p>
-<p><code>PUT/PATCH</code> <code>/users/:id</code></p>
+<p><code>POST</code> <code>/sensor_logs/</code></p>
 <p>Parameters:</p>
 <table>
 <thead>
 <tr>
 <th>Name</th>
 <th>Type</th>
+<th>Required</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>first_name</td>
-<td>string</td>
-<td>The first_name of the user object.</td>
+<td>sensor_type</td>
+<td>char</td>
+<td>Yes</td>
+<td>The type of sensor data. TM = Temperature (in Celsius), HM = Air humidity percentage, CO = Carbon Monoxide level in the air (PPM)</td>
 </tr>
 <tr>
-<td>last_name</td>
-<td>string</td>
-<td>The last_name of the user object.</td>
-</tr>
-<tr>
-<td>email</td>
-<td>string</td>
-<td>The user's email address.</td>
+<td>value</td>
+<td>decimal</td>
+<td>Yes</td>
+<td>The value from the sensor</td>
 </tr>
 </tbody>
 </table>
+<p>For bulk object creation, pass a list of objects with the above parameters.</p>
+<p><em>Examples:</em></p>
+<pre><code>curl -X POST https://smartac-backend-prod.herokuapp.com/api/v1/sensor_logs/ -H &quot;Content-Type: application/json&quot; -H 'Authorization: Token 73c8a8ad8a51ad207d10087981e882516c7dd80c' -d '{&quot;value&quot;:&quot;12&quot;,&quot;sensor_type&quot;:&quot;TM&quot;}'
+</code></pre>
+
+<pre><code>curl -X POST https://smartac-backend-prod.herokuapp.com/api/v1/sensor_logs/ -H &quot;Content-Type: application/json&quot; -H 'Authorization: Token 73c8a8ad8a51ad207d10087981e882516c7dd80c' -d '[{&quot;value&quot;:&quot;13&quot;,&quot;sensor_type&quot;:&quot;TM&quot;},{&quot;value&quot;:&quot;8&quot;,&quot;sensor_type&quot;:&quot;CO&quot;},{&quot;value&quot;:&quot;49.67&quot;,&quot;sensor_type&quot;:&quot;HM&quot;}]'
+</code></pre>
+
 <p><em>Note:</em></p>
 <ul>
-<li>All parameters are optional</li>
-<li><strong><a href="../authentication/">Authorization Protected</a></strong></li>
+<li>Autthentication header must be specified. See <a href="../authentication/">Authentication</a>.</li>
 </ul>
 <p><strong>Response</strong>:</p>
 <pre><code class="json">Content-Type application/json
-200 OK
+201 Created
 
 {
-  &quot;id&quot;: &quot;6d5f9bae-a31b-4b7b-82c4-3853eda2b011&quot;,
-  &quot;username&quot;: &quot;richard&quot;,
-  &quot;first_name&quot;: &quot;Richard&quot;,
-  &quot;last_name&quot;: &quot;Hendriks&quot;,
-  &quot;email&quot;: &quot;richard@piedpiper.com&quot;,
+  &quot;sensor_type&quot;: &quot;TM&quot;,
+  &quot;stamp&quot;: &quot;2019-06-02T06:00:53+0000&quot;, 
+  &quot;value&quot;:&quot;12.00000&quot;
 }
+</code></pre>
+
+<pre><code class="json">Content-Type application/json
+201 Created
+
+[
+  {
+    &quot;sensor_type&quot;:&quot;TM&quot;,
+    &quot;stamp&quot;:&quot;2019-06-03T00:53:29+0000&quot;,
+    &quot;value&quot;:&quot;13.00000&quot;
+  },
+  {
+    &quot;sensor_type&quot;:&quot;CO&quot;,
+    &quot;stamp&quot;:&quot;2019-06-03T00:53:29+0000&quot;,
+    &quot;value&quot;:&quot;8.00000&quot;
+  },
+  {
+    &quot;sensor_type&quot;:&quot;HM&quot;,
+    &quot;stamp&quot;:&quot;2019-06-03T00:53:29+0000&quot;,
+    &quot;value&quot;:&quot;49.67000&quot;
+  }
+]
+</code></pre>
+
+<h2 id="create-a-device-health-status-log">Create a device health status log</h2>
+<p><strong>Request</strong>:</p>
+<p><code>POST</code> <code>/health_status/</code></p>
+<p>Parameters:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>value</td>
+<td>char</td>
+<td>Yes</td>
+<td>The health status of the device, less than 150 chars</td>
+</tr>
+</tbody>
+</table>
+<p>For bulk object creation, pass a list of objects with the above parameters.</p>
+<p><em>Examples:</em></p>
+<pre><code>curl -X POST https://smartac-backend-prod.herokuapp.com/api/v1/health_status/ -H &quot;Content-Type: application/json&quot; -H 'Authorization: Token 73c8a8ad8a51ad207d10087981e882516c7dd80c' -d '{&quot;value&quot;:&quot;needs_service&quot;}'
+</code></pre>
+
+<pre><code>curl -X POST https://smartac-backend-prod.herokuapp.com/api/v1/health_status/ -H &quot;Content-Type: application/json&quot; -H 'Authorization: Token 73c8a8ad8a51ad207d10087981e882516c7dd80c' -d '[{&quot;value&quot;:&quot;needs_repair&quot;},{&quot;value&quot;:&quot;feeling_better&quot;}]'
+</code></pre>
+
+<p><em>Note:</em></p>
+<ul>
+<li>Autthentication header must be specified. See <a href="../authentication/">Authentication</a>.</li>
+</ul>
+<p><strong>Responses</strong>:</p>
+<pre><code class="json">Content-Type application/json
+201 Created
+
+{
+  &quot;stamp&quot;:&quot;2019-06-02T06:12:02+0000&quot;,
+  &quot;value&quot;:&quot;needs_service&quot;
+}
+</code></pre>
+
+<pre><code class="json">Content-Type application/json
+201 Created
+
+[
+  {
+    &quot;stamp&quot;:&quot;2019-06-03T00:47:41+0000&quot;,
+    &quot;value&quot;:&quot;needs_repair&quot;
+  },
+  {
+    &quot;stamp&quot;:&quot;2019-06-03T00:47:41+0000&quot;,
+    &quot;value&quot;:&quot;feeling_better&quot;
+  }
+]
 </code></pre></div>
         </div>
 
