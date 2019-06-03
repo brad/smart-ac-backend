@@ -22,11 +22,34 @@ class IsAlertingListFilter(admin.SimpleListFilter):
             return queryset.not_alerting()
 
 
+class ReadOnlyInline(admin.TabularInline):
+    extra = 0
+    readonly_fields = ('stamp',)
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
+class SensorLogInline(ReadOnlyInline):
+    model = DeviceSensorLog
+
+
+class HealthStatusInline(ReadOnlyInline):
+    model = DeviceHealthStatus
+
+
 @admin.register(Device)
 class DeviceAdmin(admin.ModelAdmin):
     search_fields = ('serial_number',)
     list_display = ('serial_number', 'registered',)
     list_filter = (IsAlertingListFilter,)
+    inlines = [SensorLogInline, HealthStatusInline]
 
 
 @admin.register(DeviceToken)
