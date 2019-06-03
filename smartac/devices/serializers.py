@@ -22,15 +22,6 @@ class CreateDeviceSerializer(serializers.ModelSerializer):
 
 
 class CreateDeviceSensorLogSerializer(serializers.ModelSerializer):
-    def create(self, validated_data):
-        # Create the device sensor log
-        device = self.context['request'].user
-        sensor_log = DeviceSensorLog.objects.create(
-            device=device,
-            **validated_data
-        )
-        return sensor_log
-
     class Meta:
         model = DeviceSensorLog
         fields = ('sensor_type', 'stamp', 'value')
@@ -38,15 +29,6 @@ class CreateDeviceSensorLogSerializer(serializers.ModelSerializer):
 
 
 class CreateDeviceHealthStatusSerializer(serializers.ModelSerializer):
-    def create(self, validated_data):
-        # Create the device sensor log
-        device = self.context['request'].user
-        status = DeviceHealthStatus.objects.create(
-            device=device,
-            **validated_data
-        )
-        return status
-
     class Meta:
         model = DeviceHealthStatus
         fields = ('stamp', 'value')

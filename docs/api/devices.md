@@ -49,10 +49,16 @@ Name        | Type     | Required | Description
 sensor_type | char     | Yes      | The type of sensor data. TM = Temperature (in Celsius), HM = Air humidity percentage, CO = Carbon Monoxide level in the air (PPM)
 value       | decimal  | Yes      | The value from the sensor
 
-*Example:*
+For bulk object creation, pass a list of objects with the above parameters.
+
+*Examples:*
 
 ```
 curl -X POST http://127.0.0.1:8000/api/v1/sensor_logs/ -H "Content-Type: application/json" -H 'Authorization: Token 73c8a8ad8a51ad207d10087981e882516c7dd80c' -d '{"value":"12","sensor_type":"TM"}'
+```
+
+```
+curl -X POST http://127.0.0.1:8000/api/v1/sensor_logs/ -H "Content-Type: application/json" -H 'Authorization: Token 73c8a8ad8a51ad207d10087981e882516c7dd80c' -d '[{"value":"13","sensor_type":"TM"},{"value":"8","sensor_type":"CO"},{"value":"49.67","sensor_type":"HM"}]'
 ```
 
 *Note:*
@@ -72,6 +78,29 @@ Content-Type application/json
 }
 ```
 
+```json
+Content-Type application/json
+201 Created
+
+[
+  {
+    "sensor_type":"TM",
+    "stamp":"2019-06-03T00:53:29+0000",
+    "value":"13.00000"
+  },
+  {
+    "sensor_type":"CO",
+    "stamp":"2019-06-03T00:53:29+0000",
+    "value":"8.00000"
+  },
+  {
+    "sensor_type":"HM",
+    "stamp":"2019-06-03T00:53:29+0000",
+    "value":"49.67000"
+  }
+]
+```
+
 ## Create a device health status log
 
 **Request**:
@@ -84,17 +113,23 @@ Name        | Type | Required | Description
 ------------|------|----------|------------
 value       | char | Yes      | The health status of the device, less than 150 chars
 
-*Example:*
+For bulk object creation, pass a list of objects with the above parameters.
+
+*Examples:*
 
 ```
 curl -X POST http://127.0.0.1:8000/api/v1/health_status/ -H "Content-Type: application/json" -H 'Authorization: Token 73c8a8ad8a51ad207d10087981e882516c7dd80c' -d '{"value":"needs_service"}'
+```
+
+```
+curl -X POST http://127.0.0.1:8000/api/v1/health_status/ -H "Content-Type: application/json" -H 'Authorization: Token 73c8a8ad8a51ad207d10087981e882516c7dd80c' -d '[{"value":"needs_repair"},{"value":"feeling_better"}]'
 ```
 
 *Note:*
 
 - Autthentication header must be specified. See [Authentication](authentication.md).
 
-**Response**:
+**Responses**:
 
 ```json
 Content-Type application/json
@@ -104,4 +139,20 @@ Content-Type application/json
   "stamp":"2019-06-02T06:12:02+0000",
   "value":"needs_service"
 }
+```
+
+```json
+Content-Type application/json
+201 Created
+
+[
+  {
+    "stamp":"2019-06-03T00:47:41+0000",
+    "value":"needs_repair"
+  },
+  {
+    "stamp":"2019-06-03T00:47:41+0000",
+    "value":"feeling_better"
+  }
+]
 ```
