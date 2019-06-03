@@ -5,6 +5,18 @@
 
 Backend for smart air conditioners. Check out the project's [documentation](http://brad.github.io/smart-ac-backend/).
 
+# Future Development
+
+Unfortunately, I ran out of time to complete all the requirements on this project. If I had just a bit more time I would do the following:
+
+- Adjust the template for the device page in the admin in the following ways:
+  - Enable the filtering of sensor logs by "this week", "this month", or "this year"
+  - Plug in real data to the sensor log chart
+  - Display sensor logs and health data in an orderable table format
+- Only allow admins to send invitations as themselves
+- Set up a system to notify logged in admins when there is an alerting device and a way for them to resolve these notifications
+- Write a fake smartac client to generate real time data for testing
+
 # Prerequisites
 
 - [Docker](https://docs.docker.com/docker-for-mac/install/)  
