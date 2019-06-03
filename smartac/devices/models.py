@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from django.dispatch import receiver
 from django.utils.encoding import python_2_unicode_compatible
 from django.db.models.signals import post_save
@@ -29,9 +30,7 @@ class LogsQuerySet(models.QuerySet):
 
     def is_alerting(self):
         return self.latest_annotations().filter(
-            models.Q(latest_co__gt=9) |
-            models.Q(latest_status__in=self.bad_statuses)
-        )
+            Q(latest_co__gt=9) | Q(latest_status__in=self.bad_statuses))
 
     def not_alerting(self):
         return self.exclude(id__in=self.is_alerting().values('id'))
