@@ -1,0 +1,9 @@
+{% extends "admin/change_form.html" %}
+
+
+{% block after_field_sets %}
+<div style="width: 50%">
+  {{ sensor_chart|safe }}
+</div>
+<script type="text/javascript" src="http://kozea.github.com/pygal.js/latest/pygal-tooltips.min.js"></script>
+{% endblock %}
