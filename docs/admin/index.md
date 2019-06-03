@@ -12,4 +12,8 @@ Superusers have view/update/create/delete priveleges on any user record. They ca
 
 # Devices
 
-The "Devices" section of the admin interface allows admins to view/update/create/delete device records as well as their sensor logs, status updates, and auth tokens. Select "Devices" to view a list of all devices.
+The "Devices" section of the admin interface allows admins to view/update/create/delete device records as well as their sensor logs, status updates, and auth tokens. Select "Devices" to view a list of all devices. You can search for devices by serial number on this page, as well as filter to show devices that are alerting. Devices that are alerting satisfy one of the following criteria:
+
+  - The latest carbon monoxide reading is > 9 PPM
+  - The device's latest health status is one of
+    - "needs_service", "needs_new_filter" or "gas_leak."

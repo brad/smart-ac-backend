@@ -7,30 +7,58 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework.authtoken.models import Token
 
 
+class LogsQuerySet(models.QuerySet):
+    bad_statuses = ['needs_service', 'needs_new_filter', 'gas_leak']
+
+    def latest_annotations(self):
+        # Device is alerting in several cases
+        # 1. The latest carbon monoxide reading is > 9 PPM
+        # 2. The device's latest health status is one of
+        #   "needs_service", "needs_new_filter" or "gas_leak."
+        latest_co = models.Subquery(DeviceSensorLog.objects.filter(
+            device=models.OuterRef('pk'),
+            sensor_type=DeviceSensorLog.CARBON_MONOXIDE
+        ).order_by('-stamp').values('value')[:1])
+        latest_status = models.Subquery(DeviceHealthStatus.objects.filter(
+            device=models.OuterRef('pk'),
+        ).order_by('-stamp').values('value')[:1])
+        return self.annotate(
+            latest_co=latest_co,
+            latest_status=latest_status
+        )
+
+    def is_alerting(self):
+        return self.latest_annotations().filter(
+            models.Q(latest_co__gt=9) |
+            models.Q(latest_status__in=self.bad_statuses)
+        )
+
+    def not_alerting(self):
+        return self.exclude(id__in=self.is_alerting().values('id'))
+
+
+class LogsManager(models.Manager):
+    def get_queryset(self):
+        return LogsQuerySet(self.model, using=self._db)
+
+    def is_alerting(self):
+        return self.get_queryset().is_alerting()
+
+    def not_alerting(self):
+        return self.get_queryset().not_alerting()
+
+
 @python_2_unicode_compatible
 class Device(models.Model):
     serial_number = models.UUIDField()
     firmware_version = models.CharField(max_length=32)
     registered = models.DateTimeField(auto_now_add=True)
 
+    logs = LogsManager()
+    objects = models.Manager()
+
     def __str__(self):
         return str(self.serial_number)
-
-    def is_alerting(self):
-        # Device is alerting in several cases
-        # 1. The latest carbon monoxide reading is > 9 PPM
-        # 2. The device's latest health status is one of
-        #   "needs_service", "needs_new_filter" or "gas_leak."
-        latest_co = self.device_sensor_logs.filter(
-            sensor_type=DeviceSensorLog.CARBON_MONOXIDE
-        ).latest()
-        if latest_co.value > 9:
-            return True
-        bad_statuses = ['needs_service', 'needs_new_filter', 'gas_leak']
-        latest_status = self.device_health_status.latest()
-        if latest_status.value in bad_statuses:
-            return True
-        return False
 
 
 class DeviceToken(Token):
